@@ -18,15 +18,14 @@ def part2(lines: list[str]) -> int:
     res = 0
     enabled = True
     for line in lines:
-        for instr in re.findall("mul\(\d+,\d+\)|do\(\)|don't\(\)", line):
-            if instr == "do()":
-                enabled = True
-            elif instr == "don't()":
-                enabled = False
-            elif enabled:
-                a, b = re.match("mul\((\d+),(\d+)\)", instr).groups()
-                res += int(a) * int(b)
-
+        for instr in re.findall("mul\((\d+),(\d+)\)|(do|don't)\(\)", line):
+            match instr:
+                case (a, b, "") if enabled:
+                    res += int(a) * int(b)
+                case ("", "", "do"):
+                    enabled = True
+                case ("", "", "don't"):
+                    enabled = False
     return res
 
 
@@ -38,7 +37,7 @@ def test_part1_example():
 
 
 def test_part1():
-    print(part1(read_input()))
+    assert part1(read_input()) == 165225049
 
 
 example2 = ["xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"]
@@ -49,4 +48,4 @@ def test_part2_example():
 
 
 def test_part2():
-    print(part2(read_input()))
+    assert part2(read_input()) == 108830766
