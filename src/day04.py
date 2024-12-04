@@ -18,31 +18,33 @@ def part1(lines: list[str]) -> int:
         [(0, 0), (-1, -1), (-2, -2), (-3, -3)],  # Left Up
     ]
 
-    def is_xmas(r: int, c: int, offsets: list[tuple[int, int]]) -> bool:
-        return (
-            all(0 <= r + ro < n_rows and 0 <= c + co < n_cols for (ro, co) in offsets)
-            and "".join(lines[r + ro][c + co] for ro, co in offsets) == "XMAS"
-        )
-
     res = 0
     for r in range(n_rows):
         for c in range(n_cols):
-            res += sum(is_xmas(r, c, o) for o in offsets)
+            res += sum(
+                (
+                    "".join(
+                        lines[r + ro][c + co]
+                        for ro, co in o
+                        if 0 <= r + ro < n_rows and 0 <= c + co < n_cols
+                    )
+                    == "XMAS"
+                )
+                for o in offsets
+            )
     return res
-
-
-xmas_words = {"MSAMS", "MMASS", "SSAMM", "SMASM"}
 
 
 def part2(lines: list[str]) -> int:
     n_rows = len(lines)
     n_cols = len(lines[0])
     offsets = [(-1, -1), (-1, 1), (0, 0), (1, -1), (1, 1)]
+    words = {"MSAMS", "MMASS", "SSAMM", "SMASM"}
 
     res = 0
     for r in range(1, n_rows - 1):
         for c in range(1, n_cols - 1):
-            res += "".join(lines[r + ro][c + co] for ro, co in offsets) in xmas_words
+            res += "".join(lines[r + ro][c + co] for ro, co in offsets) in words
     return res
 
 
