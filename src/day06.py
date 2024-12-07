@@ -1,6 +1,5 @@
 import dataclasses
-from collections import defaultdict, Counter
-from dataclasses import dataclass
+from collections import defaultdict
 
 
 def read_input() -> list[str]:
