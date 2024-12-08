@@ -1,9 +1,6 @@
 import dataclasses
-import functools
 import itertools
-import operator
 from collections import defaultdict
-from typing import Callable
 
 
 def read_input() -> list[str]:
