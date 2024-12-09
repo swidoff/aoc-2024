@@ -50,9 +50,9 @@ def part2(inp_: str) -> int:
 
     for file_id_ in range(file_id - 1, -1, -1):
         file_idx = 0
-        for i, blocks in enumerate(disk):
+        for i, blocks in enumerate(reversed(disk)):
             if not blocks.free and file_id_ == blocks.file_id:
-                file_idx = i
+                file_idx = len(disk) - i - 1
                 break
 
         new_disk = []
