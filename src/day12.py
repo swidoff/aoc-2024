@@ -58,7 +58,7 @@ def part1(lines: list[str]) -> int:
     return sum(len(r) * calc_perimeter(r) for r in find_all_regions(lines))
 
 
-def calc_area(region):
+def calc_sides(region):
     sides = defaultdict(list)
     for r, c in region:
         for d, r_d, c_d in (
@@ -81,7 +81,7 @@ def calc_area(region):
 
 
 def part2(lines: list[str]) -> int:
-    return sum(len(r) * calc_area(r) for r in find_all_regions(lines))
+    return sum(len(r) * calc_sides(r) for r in find_all_regions(lines))
 
 
 example1 = """AAAA
@@ -116,7 +116,6 @@ def test_part1_example():
 
 def test_part1():
     res = part1(read_input())
-    # 1470920 too high
     print(res)
     assert res == 1431440
 
