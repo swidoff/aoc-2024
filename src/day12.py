@@ -1,6 +1,4 @@
-from collections import deque
-
-from black.trans import defaultdict
+from collections import deque, defaultdict
 
 
 def read_input() -> list[str]:
