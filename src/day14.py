@@ -38,8 +38,6 @@ def part1(
 def part2(
     inp: list[tuple[int, int, int, int]], dim_x: int, dim_y: int, seconds: int
 ) -> int:
-    mid_x = dim_x // 2
-    mid_y = dim_y // 2
     s = 0
     res = defaultdict(int)
     for seconds in range(seconds):
