@@ -1,5 +1,4 @@
 import dataclasses
-import heapq
 
 
 def read_input() -> list[str]:
