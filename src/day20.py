@@ -45,29 +45,33 @@ def find_path(input_: Input) -> list[tuple[int, int]]:
     return path
 
 
-def cheat_savings(path: list[tuple[int, int]], cheat_r: int, cheat_c: int) -> int:
-    adjacent_indexes = []
-    for i, (r, c) in enumerate(path):
-        if abs(cheat_r - r) + abs(cheat_c - c) == 1:
-            adjacent_indexes.append(i)
-
-    if len(adjacent_indexes) >= 2:
-        savings = adjacent_indexes[-1] - adjacent_indexes[0] - 1
-    else:
-        savings = -1
-
-    return savings
-
-
-def part1(input_: Input, threshold: int) -> int:
-    path = find_path(input_)
-
+def count_cheats(
+    path: list[tuple[int, int]],
+    cheat_length: int,
+    savings: int,
+) -> int:
     res = 0
-    for wall_r, wall_c in input_.walls:
-        savings = cheat_savings(path, wall_r, wall_c)
-        if savings >= threshold:
+    gap = savings + cheat_length
+    i = 0
+    j = i + gap
+    while j < len(path):
+        (posi_r, posi_c) = path[i]
+        (posj_r, posj_c) = path[j]
+        dist = abs(posi_r - posj_r) + abs(posi_c - posj_c)
+        if dist <= cheat_length:
             res += 1
+        i += 1
+        j += 1
 
+    return res
+
+
+def part1(input_: Input, cheat_length: int, savings: int) -> int:
+    path = find_path(input_)
+    res = 0
+    seen = set()
+    for s in range(savings, len(path)):
+        res += count_cheats(path, cheat_length, s)
     return res
 
 
@@ -90,14 +94,42 @@ example1 = """###############
 
 
 def test_part1_example():
-    assert part1(parse_input(example1), 64) == 1
-    assert part1(parse_input(example1), 40) == 2
-    assert part1(parse_input(example1), 38) == 3
-    assert part1(parse_input(example1), 36) == 4
-    assert part1(parse_input(example1), 2) == 44
+    assert part1(parse_input(example1), 2, 64) == 1
+    assert part1(parse_input(example1), 2, 40) == 2
+    assert part1(parse_input(example1), 2, 38) == 3
+    assert part1(parse_input(example1), 2, 36) == 4
+    assert part1(parse_input(example1), 2, 20) == 5
+    assert part1(parse_input(example1), 2, 12) == 8
+    assert part1(parse_input(example1), 2, 10) == 10
+    assert part1(parse_input(example1), 2, 8) == 14
+    assert part1(parse_input(example1), 2, 6) == 16
+    assert part1(parse_input(example1), 2, 4) == 30
+    assert part1(parse_input(example1), 2, 2) == 44
 
 
 def test_part1():
-    res = part1(parse_input(read_input()), 100)
+    res = part1(parse_input(read_input()), 2, 100)
     print(res)
     assert res == 1317
+
+
+def test_part2_example():
+    assert part1(parse_input(example1), 20, 76) == 3
+    assert part1(parse_input(example1), 20, 74) == 7
+    assert part1(parse_input(example1), 20, 72) == 22
+    # assert part1(parse_input(example1), 20, 38) == 3
+    # assert part1(parse_input(example1), 20, 36) == 4
+    # assert part1(parse_input(example1), 20, 20) == 5
+    # assert part1(parse_input(example1), 20, 12) == 8
+    # assert part1(parse_input(example1), 20, 10) == 10
+    # assert part1(parse_input(example1), 20, 8) == 14
+    # assert part1(parse_input(example1), 20, 6) == 16
+    # assert part1(parse_input(example1), 20, 4) == 30
+    # assert part1(parse_input(example1), 20, 2) == 44
+
+
+#
+#
+# def test_part2():
+#     res = part2(parse_input(read_input()), 100)
+#     print(res)
