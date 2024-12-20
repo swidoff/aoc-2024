@@ -46,25 +46,25 @@ def find_path(input_: Input) -> list[tuple[int, int]]:
 
 
 def count_cheats(
-    path: list[tuple[int, int]], cheat_length: int, savings_threshold: int
+    path: list[tuple[int, int]], max_cheat_length: int, min_savings: int
 ) -> int:
     res = 0
     for i in range(len(path)):
+        (posi_r, posi_c) = path[i]
         for j in range(i + 1, len(path)):
-            (posi_r, posi_c) = path[i]
             (posj_r, posj_c) = path[j]
-            dist = abs(posi_r - posj_r) + abs(posi_c - posj_c)
-            savings = j - i - dist
+            cheat_length = abs(posi_r - posj_r) + abs(posi_c - posj_c)
+            savings = j - i - cheat_length
 
-            if dist <= cheat_length and savings >= savings_threshold:
+            if cheat_length <= max_cheat_length and savings >= min_savings:
                 res += 1
 
     return res
 
 
-def solve(input_: Input, cheat_length: int, savings: int) -> int:
+def solve(input_: Input, max_cheat_length: int, min_savings: int) -> int:
     path = find_path(input_)
-    return count_cheats(path, cheat_length, savings)
+    return count_cheats(path, max_cheat_length, min_savings)
 
 
 example1 = """###############
