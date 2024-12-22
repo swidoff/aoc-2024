@@ -1,5 +1,4 @@
 import dataclasses
-from functools import cache
 
 
 def read_input() -> list[str]:
