@@ -107,3 +107,4 @@ def test_part1():
 def test_part2():
     res = part2(read_input())
     print(res)
+    assert res == 223285811665866
