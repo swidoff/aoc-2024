@@ -1,6 +1,6 @@
 import itertools
 
-from black.trans import defaultdict
+from collections import defaultdict
 
 
 def read_input() -> list[str]:
