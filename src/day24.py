@@ -5,7 +5,7 @@ import operator
 import re
 from typing import Callable
 
-from black.trans import defaultdict
+from collections import defaultdict
 
 
 def read_input() -> list[str]:
